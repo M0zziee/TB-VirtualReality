@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>A-Frame: City Builder</title>
+    <meta itemprop="name" content="A-Frame: City Builder" />
+    <meta name="twitter:title" content="A-Frame: City Builder" />
+    <meta property="og:title" content="A-Frame: City Builder" />
+    <meta property="og:site_name" content="A-Frame: City Builder" />
+    <meta
+      name="description"
+      content="Build and manage a low-poly city in AR, desktop, and VR."
+    />
+    <meta
+      itemprop="description"
+      content="Build and manage a low-poly city in AR, desktop, and VR."
+    />
+    <meta
+      property="og:description"
+      content="Build and manage a low-poly city in AR, desktop, and VR."
+    />
+    <meta
+      name="twitter:description"
+      content="Build and manage a low-poly city in AR, desktop, and VR."
+    />
+
+    <script
+      crossorigin="anonymous"
+      src="./external/scripts/8frame-1.5.0.min.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js"
+      crossorigin="anonymous"
+      async="true"
+      data-preload-chunks="slam"
+    ></script>
+  </head>
+
+  <body>
+    <script src="bundle.js"></script>
+
+    <a-scene
+      city-sim
+      building-placer
+      city-bootstrap
+      landing-page
+      xrextras-loading
+      xrextras-runtime-error
+      renderer="colorManagement:true"
+      xrweb="
+    allowedDevices: any;
+    defaultEnvironmentFogIntensity: 0; 
+    defaultEnvironmentFloorTexture: #groundTex; 
+    defaultEnvironmentFloorColor: #FFF;"
+    >
+      <a-assets>
+        <img id="groundTex" src="assets/Terrain/Perennial-Ryegrass.jpg" />
+        <a-asset-item
+          id="skyboxModel"
+          src="assets/Skybox/free_-_skybox_anime_sky.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="city-hall"
+          src="assets/low_poly_city_hall.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="four-buildings"
+          src="assets/set_of_4_low-poly_buildings.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="rock"
+          src="assets/basic_rock_low_poly.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="dumpster"
+          src="assets/low_poly_-_dumpster.glb"
+        >        </a-asset-item>
+        <a-asset-item
+          id="market-stall"
+          src="assets/low_poly_market_stall_1.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="house"
+          src="assets/quaternius_house.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="building"
+          src="assets/quaternius_building.glb"
+        >        </a-asset-item>
+        <a-asset-item
+          id="large-building"
+          src="assets/quaternius_large-building.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="big-barn"
+          src="assets/quaternius_big-barn.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="small-barn"
+          src="assets/quaternius_small-barn.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="small-building1"
+          src="assets/quaternius_small-building1.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="small-building2"
+          src="assets/quaternius_small-building2.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="tower-windmill"
+          src="assets/quaternius_tower-windmill.glb"
+        >        </a-asset-item>
+        <a-asset-item
+          id="windmill"
+          src="assets/quaternius_windmill.glb"
+        ></a-asset-item>
+      </a-assets>
+
+      <a-camera
+        id="camera"
+        position="0 8 8"
+        raycaster="objects: .cantap, .building"
+        cursor="fuse: false; rayOrigin: mouse;"
+      >
+      </a-camera>
+
+      <a-entity
+        light="
+      type: directional;
+      intensity: 0.8;
+      castShadow: true;
+      shadowMapHeight:2048;
+      shadowMapWidth:2048;
+      shadowCameraTop: 40;
+      shadowCameraBottom: -40;
+      shadowCameraRight: 40;
+      shadowCameraLeft: -40;
+      target: #camera"
+        xrextras-attach="target: camera; offset: 8 15 4"
+        position="1 4.3 2.5"
+        shadow
+      >
+      </a-entity>
+
+      <a-light type="ambient" intensity="0.5"></a-light>
+
+      <a-entity gltf-model="#skyboxModel" position="0 0 0"></a-entity>
+
+      <a-box
+        id="ground"
+        class="cantap"
+        scale="1000 2 1000"
+        position="0 -0.99 0"
+        material="shader: shadow; transparent: true; opacity: 0.4"
+        shadow
+      >
+      </a-box>
+    </a-scene>
+  </body>
+</html>
