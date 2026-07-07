@@ -1,7 +1,8 @@
 import './index.css'
 import {CitySimComponent} from './city-sim'
 import {BuildingPlacerComponent} from './building-placer'
-import {initUI, updateHUD, showResultOverlay, showMainMenu, showMuteButton, showGameButtons} from './ui'
+import {initUI, updateHUD, showResultOverlay, showMainMenu, showMuteButton, showGameButtons, updateMuteIcon} from './ui'
+import {initBGM, playBGM} from './audio'
 
 AFRAME.registerComponent('city-sim', CitySimComponent)
 AFRAME.registerComponent('building-placer', BuildingPlacerComponent)
@@ -15,6 +16,9 @@ AFRAME.registerComponent('city-bootstrap', {
       initUI(citySim)
       citySim.startGame()
       showGameButtons()
+      initBGM()
+      playBGM()
+      updateMuteIcon()
 
       setInterval(() => updateHUD(citySim.getState()), 500)
 

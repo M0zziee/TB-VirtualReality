@@ -1,5 +1,6 @@
 import { CATEGORIES, BUILDING_TYPES, getBuildingType } from "./building-types";
 import { createOverlay, removeOverlay, fmt, levelStars } from "./ui-helpers";
+import { toggleBGM, isBGMPlaying, setBGMVolume, getBGMVolume } from "./audio";
 
 /* ── State ── */
 
@@ -8,7 +9,6 @@ const _ = {
   selectedType: null,
   citySimRef: null,
   sceneEl: null,
-  isMuted: false,
 };
 
 /* ── Public API ── */
@@ -141,13 +141,17 @@ export function showMuteButton() {
 }
 
 export function isMuted() {
-  return _.isMuted;
+  return !isBGMPlaying();
 }
 
 export function toggleMute() {
-  _.isMuted = !_.isMuted;
+  toggleBGM();
+  updateMuteIcon();
+}
+
+export function updateMuteIcon() {
   const btn = document.getElementById("mute-btn");
-  if (btn) btn.textContent = _.isMuted ? "\u2715" : "\u266A";
+  if (btn) btn.textContent = isBGMPlaying() ? "\u266A" : "\u2715";
 }
 
 export function openSettings() {
@@ -185,10 +189,13 @@ export function hideGameButtons() {
 /* ── Internal: Screens ── */
 
 function showSettings() {
-  createOverlay("settings-modal", "modal-overlay", settingsHTML(), [
+  const overlay = createOverlay("settings-modal", "modal-overlay", settingsHTML(), [
     [".modal-close", "click", () => removeOverlay("settings-modal")],
     [".settings-back-btn", "click", () => removeOverlay("settings-modal")],
-  ]);
+    ["#bgm-volume", "input", (e) => setBGMVolume(e.target.value / 100)],
+  ])
+  const slider = overlay.querySelector("#bgm-volume")
+  if (slider) slider.value = Math.round(getBGMVolume() * 100)
 }
 
 function showGoodbye() {
@@ -265,7 +272,7 @@ function settingsHTML() {
       <div class="settings-content">
         <div class="settings-item">
           <span>Music Volume</span>
-          <input type="range" min="0" max="100" value="50" disabled>
+          <input id="bgm-volume" type="range" min="0" max="100">
         </div>
         <div class="settings-item">
           <span>Sound FX</span>
