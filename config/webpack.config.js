@@ -23,21 +23,10 @@ const makeJsLoader = () => ({
   exclude: /node_modules/,
 })
 
-const makeTsLoader = () => ({
-  test: /\.ts$/,
-  loader: 'ts-loader',
-  exclude: /node_modules/,
-})
-
 const makeCssLoader = () => ({
   test: /\.css$/,
   exclude: /\/assets\//,
   use: ['style-loader', 'css-loader'],
-})
-
-const makeSassLoader = () => ({
-  test: /\.scss$/,
-  use: ['style-loader', 'css-loader', 'sass-loader'],
 })
 
 const makeAssetLoader = () => ({
@@ -106,13 +95,11 @@ const config = {
       }),
     ],
   },
-  resolve: {extensions: ['.ts', '.js']},
+  resolve: {extensions: ['.js']},
   module: {
     rules: [
       makeJsLoader(),
-      makeTsLoader(),
       makeCssLoader(),
-      makeSassLoader(),
       makeAssetLoader(),
       makeDefaultHtmlLoader(),
     ],
